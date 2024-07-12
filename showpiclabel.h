@@ -3,16 +3,23 @@
 
 #include <QLabel>
 #include <QImage>
+#include <QColor>
+#include <QPixmap>
 
 
 class ShowPicLabel
 {
 public:
-    ShowPicLabel();
+    ShowPicLabel(QLabel *showLabel);
     ~ShowPicLabel();
 
 private:
+    QImage *showImage;
+    QLabel *showLabel;
+    int width;
+    int height;
 
+    void Clear();
 };
 
 #endif // SHOWPICLABEL_H

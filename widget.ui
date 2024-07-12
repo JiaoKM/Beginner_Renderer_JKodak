@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QPushButton" name="RenderButton">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>230</y>
-     <width>141</width>
-     <height>51</height>
+     <x>820</x>
+     <y>160</y>
+     <width>360</width>
+     <height>120</height>
     </rect>
    </property>
    <property name="font">
@@ -35,10 +35,10 @@
   <widget class="QPushButton" name="ModelSelect">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>160</y>
-     <width>141</width>
-     <height>51</height>
+     <x>820</x>
+     <y>20</y>
+     <width>360</width>
+     <height>120</height>
     </rect>
    </property>
    <property name="font">
@@ -49,6 +49,19 @@
    </property>
    <property name="text">
     <string>Select Model</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ShowLabel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>800</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

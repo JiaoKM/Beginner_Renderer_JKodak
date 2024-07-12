@@ -4,6 +4,11 @@
 #include <QWidget>
 #include <QImage>
 #include <QLabel>
+#include <QString>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QMessageBox>
+#include "showpiclabel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -17,7 +22,11 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void on_ModelSelect_clicked();
+
 private:
     Ui::Widget *ui;
+    ShowPicLabel *showPicLabel;
 };
 #endif // WIDGET_H
