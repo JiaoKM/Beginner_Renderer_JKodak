@@ -3,3 +3,6 @@
 I will create a simple renderer from zero as a beginner of graphics. All updates will be shown in this repository.
 
 ------
+### Reference
+
+- [Real-time display of images from CSDN](https://blog.csdn.net/wangduanqiugao/article/details/83040182)
