@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="RenderButton">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>260</y>
+     <x>560</x>
+     <y>230</y>
      <width>141</width>
      <height>51</height>
     </rect>
@@ -30,6 +30,25 @@
    </property>
    <property name="text">
     <string>Render</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ModelSelect">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>160</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Select Model</string>
    </property>
   </widget>
  </widget>
