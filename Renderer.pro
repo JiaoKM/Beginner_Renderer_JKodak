@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     geometry.cpp \
     main.cpp \
+    model.cpp \
     showpiclabel.cpp \
     widget.cpp
 
 HEADERS += \
     geometry.h \
+    model.h \
     showpiclabel.h \
     widget.h
 

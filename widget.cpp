@@ -7,6 +7,7 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     this->showPicLabel = new ShowPicLabel(ui->ShowLabel);
+    ui->ConsoleText->setText(this->readyStatus);
 }
 
 Widget::~Widget()

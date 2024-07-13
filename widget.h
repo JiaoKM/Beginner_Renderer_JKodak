@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QFile>
 #include <QImage>
 #include <QLabel>
 #include <QString>
@@ -28,5 +29,6 @@ private slots:
 private:
     Ui::Widget *ui;
     ShowPicLabel *showPicLabel;
+    QString readyStatus = "Ready to load";
 };
 #endif // WIDGET_H
