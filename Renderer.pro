@@ -19,12 +19,14 @@ SOURCES += \
     geometry.cpp \
     main.cpp \
     model.cpp \
+    renderer.cpp \
     showpiclabel.cpp \
     widget.cpp
 
 HEADERS += \
     geometry.h \
     model.h \
+    renderer.h \
     showpiclabel.h \
     widget.h
 

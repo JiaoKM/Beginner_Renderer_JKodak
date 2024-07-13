@@ -31,6 +31,9 @@ private:
     Ui::Widget *ui;
     ShowPicLabel *showPicLabel;
     Model *model;
+
     QString readyStatus = "Ready to load";
+    QString loadSuccess = "Load model successfully!";
+    QString loadFail = "Loading model failed";
 };
 #endif // WIDGET_H

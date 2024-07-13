@@ -15,10 +15,12 @@ public:
     ~Model();
     int nVerts();
     int nFaces();
+    bool load_flag = true;
+
     Vec3f vert(int i);
     std::vector<int> face(int i);
 private:
-    bool load_flag = true;
+
     std::vector<Vec3f> verts_;
     std::vector<std::vector<int>> faces_;
 };

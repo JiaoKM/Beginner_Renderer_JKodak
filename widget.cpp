@@ -23,5 +23,10 @@ void Widget::on_ModelSelect_clicked()
 
     if (!modelFilePath.isEmpty()) {
         this->model = new Model(modelFilePath);
+        if (this->model->load_flag) ui->ConsoleText->setText(this->loadSuccess);
+        else ui->ConsoleText->setText(this->loadFail);
+    }
+    else {
+        ui->ConsoleText->setText(this->loadFail);
     }
 }
