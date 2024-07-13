@@ -9,13 +9,15 @@ Use `Select Model` button to find and select your OBJ file.
 
 Use `Render` button to render the model on the screen.
 
+[Latest release version](release/240713Renderer.zip)
+
 ---
 
 ### 13/07/2024 Update
 
 <img src="images/240713version.png" alt="240713version" style="zoom:50%;" />
 
-Today, I add a log window at the right bottom of the main window. It will show you whether the model selection and rendering are successful or not. And I implement the rendering of a single OBJ file. As you see, the African head model is rendered on the screen successfully!
+Today, I add a log window at the right bottom of the main window. It will show you whether the model selection and rendering are successful or not. And I implement the rendering of a single OBJ file. As you see, the African head model is rendered on the screen successfully! [Release version](release/240713Renderer.zip)
 
 ---
 
