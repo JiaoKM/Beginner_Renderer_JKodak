@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "showpiclabel.h"
+#include "renderer.h"
 #include "model.h"
 
 QT_BEGIN_NAMESPACE
@@ -27,13 +28,17 @@ public:
 private slots:
     void on_ModelSelect_clicked();
 
+    void on_RenderButton_clicked();
+
 private:
     Ui::Widget *ui;
     ShowPicLabel *showPicLabel;
     Model *model;
+    renderer *JRender;
 
     QString readyStatus = "Ready to load";
-    QString loadSuccess = "Load model successfully!";
-    QString loadFail = "Loading model failed";
+    QString loadSuccess = "Load your model successfully!";
+    QString loadFail = "Loading your model failed.";
+    QString renderSuccess = "Render your model successfully!";
 };
 #endif // WIDGET_H

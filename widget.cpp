@@ -8,6 +8,7 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
     this->showPicLabel = new ShowPicLabel(ui->ShowLabel);
     ui->ConsoleText->setText(this->readyStatus);
+    this->JRender = new renderer(this->showPicLabel->width, this->showPicLabel->height);
 }
 
 Widget::~Widget()
@@ -28,5 +29,13 @@ void Widget::on_ModelSelect_clicked()
     }
     else {
         ui->ConsoleText->setText(this->loadFail);
+    }
+}
+
+void Widget::on_RenderButton_clicked()
+{
+    bool render_flag = this->JRender->render(this->showPicLabel, this->model);
+    if (render_flag) {
+        ui->ConsoleText->setText(this->renderSuccess);
     }
 }

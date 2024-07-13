@@ -26,7 +26,7 @@ void ShowPicLabel::Clear()
 
 void ShowPicLabel::SetPixel(int i, int j, QRgb color)
 {
-    this->showImage->setPixel(i, j, color);
+    this->showImage->setPixel(i, this->height - j - 1, color);
 }
 
 void ShowPicLabel::UpdatePic()

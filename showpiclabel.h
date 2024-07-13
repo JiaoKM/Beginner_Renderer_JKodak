@@ -15,11 +15,12 @@ public:
     void SetPixel(int i, int j, QRgb color);
     void UpdatePic();
 
+    int width;
+    int height;
 private:
     QImage *showImage;
     QLabel *showLabel;
-    int width;
-    int height;
+
 
     void Clear();
 };
