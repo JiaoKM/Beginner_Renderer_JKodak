@@ -14,6 +14,11 @@ Model::Model(QString modelPath)
         load_flag = false;
         return;
     }
+
+    QStringList lines = modelContent.split('\n');
+    for (int i = 0; i < lines.size(); i++) {
+
+    }
 }
 
 Model::~Model()

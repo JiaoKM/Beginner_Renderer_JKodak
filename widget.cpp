@@ -22,6 +22,6 @@ void Widget::on_ModelSelect_clicked()
     modelFilePath = QFileDialog::getOpenFileName(this, tr("Select your model"), "", tr("*.obj"));
 
     if (!modelFilePath.isEmpty()) {
-
+        this->model = new Model(modelFilePath);
     }
 }

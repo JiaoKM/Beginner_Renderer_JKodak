@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "showpiclabel.h"
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -29,6 +30,7 @@ private slots:
 private:
     Ui::Widget *ui;
     ShowPicLabel *showPicLabel;
+    Model *model;
     QString readyStatus = "Ready to load";
 };
 #endif // WIDGET_H

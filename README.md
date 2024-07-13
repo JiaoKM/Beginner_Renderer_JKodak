@@ -3,6 +3,14 @@
 I will create a simple renderer from zero as a beginner of graphics. All updates will be shown in this repository.
 
 ------
+### Instruction
+
+Use `Select Model` button to find and select your OBJ file.
+
+Use `Render` button to render the model on the screen.
+
+---
+
 ### 12/07/2024 Update
 
 <img src="images/240712version.png" alt="240712version" style="zoom:50%;" />
