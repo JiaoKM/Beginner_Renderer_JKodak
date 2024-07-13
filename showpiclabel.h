@@ -12,6 +12,8 @@ class ShowPicLabel
 public:
     ShowPicLabel(QLabel *showLabel);
     ~ShowPicLabel();
+    void SetPixel(int i, int j, QRgb color);
+    void UpdatePic();
 
 private:
     QImage *showImage;

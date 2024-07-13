@@ -64,6 +64,19 @@
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="ConsoleText">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>770</y>
+     <width>360</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Ready to load&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
