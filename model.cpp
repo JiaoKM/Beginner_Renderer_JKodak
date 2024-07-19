@@ -26,10 +26,30 @@ Model::Model(QString modelPath)
             }
             this->verts_.push_back(v);
         }
-        else if (lineSplit[0] == "f") {
-            std::vector<int> f;
+        else if (lineSplit[0] == "vn") {
+            Vec3f n;
             for (int j = 0; j < 3; j++) {
-                f.push_back(lineSplit[j + 1].split("/")[0].toInt() - 1);
+                double tmp = lineSplit[j + 1].toDouble();
+                n[j] = static_cast<float>(tmp);
+            }
+            this->norms_.push_back(n);
+        }
+        else if (lineSplit[0] == "vt") {
+            Vec2f uv;
+            for (int j = 0; j < 2; j++) {
+                double tmp = lineSplit[j + 1].toDouble();
+                uv[j] = static_cast<float>(tmp);
+            }
+            this->uv_.push_back(uv);
+        }
+        else if (lineSplit[0] == "f") {
+            std::vector<Vec3i> f;
+            Vec3i tmp;
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    tmp[k] = lineSplit[j + 1].split("/")[k].toInt() - 1;
+                }
+                f.push_back(tmp);
             }
             this->faces_.push_back(f);
         }
@@ -60,5 +80,8 @@ Vec3f Model::vert(int i)
 
 std::vector<int> Model::face(int i)
 {
-    return faces_[i];
+    std::vector<int> face;
+    for (int j = 0; j < (int)faces_[i].size(); j++)
+        face.push_back(faces_[i][j][0]);
+    return face;
 }
