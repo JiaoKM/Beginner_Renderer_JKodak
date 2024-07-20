@@ -54,7 +54,9 @@ Model::Model(QString modelPath)
             this->faces_.push_back(f);
         }
     }
+
     this->load_flag = true;
+    this->load_texture(modelPath, "_diffuse.tga", diffuseMap);
 }
 
 Model::~Model()
@@ -89,4 +91,16 @@ Vec2i Model::uv(int iFace, int nVert)
 {
     int idx = this->faces_[iFace][nVert][1];
     return Vec2i(this->uv_[idx].x * diffuseMap.width(), this->uv_[idx].y * diffuseMap.height());
+}
+
+void Model::load_texture(QString objFilename, QString suffix, QImage &img)
+{
+    QString title = objFilename.split(".")[0];
+    QString textureFilename = title + suffix;
+    img.load(textureFilename);
+}
+
+QRgb Model::diffuse(Vec2i uv)
+{
+    return QRgb(this->diffuseMap.pixel(uv.x, uv.y));
 }
