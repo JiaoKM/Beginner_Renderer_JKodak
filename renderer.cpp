@@ -32,7 +32,7 @@ Vec3f renderer::baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P)
         return Vec3f(-1, 1, 1);
 }
 
-void renderer::triangle(Vec3f *pts, ShowPicLabel *showLabel, QRgb color)
+void renderer::triangle(Vec3f *pts, Vec2i *uv, ShowPicLabel *showLabel, Model *model, float intensity)
 {
     Vec2f bboxmin(std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
     Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
@@ -44,15 +44,24 @@ void renderer::triangle(Vec3f *pts, ShowPicLabel *showLabel, QRgb color)
         }
     }
     Vec3f P;
+    Vec2i uvP;
     for (P.x = bboxmin.x; P.x <= bboxmax.x; P.x++) {
         for (P.y = bboxmin.y; P.y <= bboxmax.y; P.y++) {
             Vec3f bc_screen = this->baryCentric(pts[0], pts[1], pts[2], P);
             if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z < 0) continue;
             P.z = 0;
-            for (int i=0; i<3; i++) P.z += pts[i][2]*bc_screen[i];
+            uvP.x = 0;
+            uvP.y = 0;
+            for (int i = 0; i < 3; i++) {
+                P.z += pts[i][2] * bc_screen[i];
+                uvP.x += uv[i].x * bc_screen[i];
+                uvP.y += uv[i].y * bc_screen[i];
+            }
             if (this->zBuffer[int(P.x + P.y * this->width)] < P.z) {
                 this->zBuffer[int(P.x + P.y * this->width)] = P.z;
-                showLabel->SetPixel(P.x, P.y, color);
+                QColor color = model->diffuse(uvP);
+                QRgb textureColor = qRgba(color.red() * intensity, color.green() * intensity, color.blue() * intensity, 255);
+                showLabel->SetPixel(P.x, P.y, textureColor);
             }
         }
     }
@@ -71,8 +80,9 @@ bool renderer::render(ShowPicLabel *showLabel, Model *model)
         for (int j = 0; j < 3; j++) pts[j] = this->world2screen(pts[j]);
 
         if (intensity > 0) {
-            QRgb color = qRgba(intensity * 255, intensity * 255, intensity * 255, 255);
-            this->triangle(pts, showLabel, color);
+            Vec2i uv[3];
+            for (int k = 0; k < 3; k++) uv[k] = model->uv(i, k);
+            this->triangle(pts, uv, showLabel, model, intensity);
         }
     }
     showLabel->UpdatePic();

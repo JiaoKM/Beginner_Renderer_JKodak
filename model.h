@@ -20,15 +20,15 @@ public:
 
     Vec3f vert(int i);
     Vec2i uv(int iFace, int nVert);
-    QRgb diffuse(Vec2i uv);
+    QColor diffuse(Vec2i uv);
     std::vector<int> face(int i);
 private:
     std::vector<Vec3f> verts_;
     std::vector<std::vector<Vec3i>> faces_;
     std::vector<Vec3f> norms_;
     std::vector<Vec2f> uv_;
-    QImage diffuseMap;
-    void load_texture(QString textureFilename, QString suffix, QImage &img);
+    QImage *diffuseMap;
+    void load_texture(QString objFilename, QString suffix);
 };
 
 #endif // MODEL_H
