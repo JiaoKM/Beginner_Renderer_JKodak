@@ -14,15 +14,13 @@ public:
     ~ShowPicLabel();
     void SetPixel(int i, int j, QRgb color);
     void UpdatePic();
+    void Clear();
 
     int width;
     int height;
 private:
     QImage *showImage;
     QLabel *showLabel;
-
-
-    void Clear();
 };
 
 #endif // SHOWPICLABEL_H
