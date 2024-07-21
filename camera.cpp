@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-    this->position = Vec3f(0, 0, -3);
+    this->position = Vec3f(0, 0, 100);
 }
 
 Camera::~Camera()

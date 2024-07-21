@@ -35,6 +35,7 @@ void Widget::on_ModelSelect_clicked()
 void Widget::on_RenderButton_clicked()
 {
     this->showPicLabel->Clear();
+    this->JRender->reset_zBuffer();
     bool render_flag = this->JRender->render(this->showPicLabel, this->model);
     if (render_flag) {
         ui->ConsoleText->setText(this->renderSuccess);

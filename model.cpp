@@ -61,7 +61,7 @@ Model::Model(QString modelPath)
 
 Model::~Model()
 {
-
+    delete this->diffuseMap;
 }
 
 int Model::nVerts()

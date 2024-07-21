@@ -12,7 +12,7 @@ ShowPicLabel::ShowPicLabel(QLabel *showLabel)
 
 ShowPicLabel::~ShowPicLabel()
 {
-
+    delete this->showImage;
 }
 
 void ShowPicLabel::Clear()

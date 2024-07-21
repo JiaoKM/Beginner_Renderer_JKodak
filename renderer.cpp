@@ -5,17 +5,45 @@ renderer::renderer(int width, int height)
     this->width = width;
     this->height = height;
     this->zBuffer = new float[width * height];
-    for (int i = width * height; i--; zBuffer[i] = -std::numeric_limits<float>::max());
+    this->reset_zBuffer();
+    this->camera = new Camera();
 }
 
 renderer::~renderer()
 {
-
+    delete this->camera;
 }
 
-Vec3f renderer::world2screen(Vec3f v)
+void renderer::reset_zBuffer()
 {
-    return Vec3f(int((v.x + 1.0) * this->width / 2.0 + 0.5), int((v.y + 1.0) * this->height / 2.0 + 0.5), v.z);
+    for (int i = width * height; i--; zBuffer[i] = -std::numeric_limits<float>::max());
+}
+
+Vec3f renderer::m2v(Matrix m)
+{
+    return Vec3f(m[0][0] / m[3][0], m[1][0] / m[3][0], m[2][0] / m[3][0]);
+}
+
+Matrix renderer::v2m(Vec3f v)
+{
+    Matrix m(4, 1);
+    m[0][0] = v.x;
+    m[1][0] = v.y;
+    m[2][0] = v.z;
+    m[3][0] = 1.f;
+    return m;
+}
+
+Matrix renderer::viewport(int x, int y, int w, int h)
+{
+    Matrix m = Matrix::identity(4);
+    m[0][3] = x + w / 2.f;
+    m[1][3] = y + h / 2.f;
+    m[2][3] = 255 / 2.f;
+    m[0][0] = w / 4.f;
+    m[1][1] = h / 4.f;
+    m[2][2] = 255 / 4.f;
+    return m;
 }
 
 Vec3f renderer::baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P)
@@ -26,63 +54,66 @@ Vec3f renderer::baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P)
             s[i][1] = B[i] - A[i];
             s[i][2] = A[i] - P[i];
         }
-        Vec3f u = cross(s[0], s[1]);
+        Vec3f u = s[0] ^ s[1];
         if (std::abs(u[2]) > 1e-2) // dont forget that u[2] is integer. If it is zero then triangle ABC is degenerate
             return Vec3f(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
         return Vec3f(-1, 1, 1);
 }
 
-void renderer::triangle(Vec3f *pts, Vec2i *uv, ShowPicLabel *showLabel, Model *model, float intensity)
+void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float intensity)
 {
-    Vec2f bboxmin(std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
-    Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
-    Vec2f clamp(this->width - 1, this->height - 1);
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 2; j++) {
-            bboxmin[j] = std::max(0.f, std::min(bboxmin[j], pts[i][j]));
-            bboxmax[j] = std::min(clamp[j], std::max(bboxmax[j], pts[i][j]));
-        }
-    }
-    Vec3f P;
-    Vec2i uvP;
-    for (P.x = bboxmin.x; P.x <= bboxmax.x; P.x++) {
-        for (P.y = bboxmin.y; P.y <= bboxmax.y; P.y++) {
-            Vec3f bc_screen = this->baryCentric(pts[0], pts[1], pts[2], P);
-            if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z < 0) continue;
-            P.z = 0;
-            uvP.x = 0;
-            uvP.y = 0;
-            for (int i = 0; i < 3; i++) {
-                P.z += pts[i][2] * bc_screen[i];
-                uvP.x += uv[i].x * bc_screen[i];
-                uvP.y += uv[i].y * bc_screen[i];
+    if (t0.y==t1.y && t0.y==t2.y) return; // i dont care about degenerate triangles
+    if (t0.y>t1.y) { std::swap(t0, t1); std::swap(uv0, uv1); }
+    if (t0.y>t2.y) { std::swap(t0, t2); std::swap(uv0, uv2); }
+    if (t1.y>t2.y) { std::swap(t1, t2); std::swap(uv1, uv2); }
+
+        int total_height = t2.y-t0.y;
+        for (int i=0; i < total_height; i++) {
+            bool second_half = i>t1.y-t0.y || t1.y==t0.y;
+            int segment_height = second_half ? t2.y-t1.y : t1.y-t0.y;
+            float alpha = (float)i/total_height;
+            float beta  = (float)(i-(second_half ? t1.y-t0.y : 0))/segment_height; // be careful: with above conditions no division by zero here
+            Vec3i A   =               t0  + Vec3f(t2-t0  )*alpha;
+            Vec3i B   = second_half ? t1  + Vec3f(t2-t1  )*beta : t0  + Vec3f(t1-t0  )*beta;
+            Vec2i uvA =               uv0 +      (uv2-uv0)*alpha;
+            Vec2i uvB = second_half ? uv1 +      (uv2-uv1)*beta : uv0 +      (uv1-uv0)*beta;
+            if (A.x>B.x) { std::swap(A, B); std::swap(uvA, uvB); }
+            for (int j=A.x; j<=B.x; j++) {
+                float phi = B.x==A.x ? 1. : (float)(j-A.x)/(float)(B.x-A.x);
+                Vec3i   P = Vec3f(A) + Vec3f(B-A)*phi;
+                if (P.x > width - 1 || P.x < 0 || P.y > height - 1 || P.y < 0) continue;
+                Vec2i uvP =     uvA +   (uvB-uvA)*phi;
+                int idx = P.x+P.y*width;
+                if (this->zBuffer[idx]<P.z) {
+                    this->zBuffer[idx] = P.z;
+                    QColor color = model->diffuse(uvP);
+                    QRgb textureColor = qRgba(color.red() * intensity, color.green() * intensity, color.blue() * intensity, 255);
+                    showLabel->SetPixel(P.x, P.y, textureColor);
+                }
             }
-            if (this->zBuffer[int(P.x + P.y * this->width)] < P.z) {
-                this->zBuffer[int(P.x + P.y * this->width)] = P.z;
-                QColor color = model->diffuse(uvP);
-                QRgb textureColor = qRgba(color.red() * intensity, color.green() * intensity, color.blue() * intensity, 255);
-                showLabel->SetPixel(P.x, P.y, textureColor);
-            }
         }
-    }
 }
 
 bool renderer::render(ShowPicLabel *showLabel, Model *model)
 {
     Vec3f light_dir(0, 0, -1);
+    Matrix Projection = Matrix::identity(4);
+    Projection[3][2] = -1.f / this->camera->get_pos().z;
+    Matrix ViewPort = viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+
     for (int i = 0; i < model->nFaces(); i++) {
         std::vector<int> face = model->face(i);
         Vec3f pts[3];
         for (int j = 0; j < 3; j++) pts[j] = model->vert(face[j]);
-        Vec3f n = cross(pts[2] - pts[0], pts[1] - pts[0]);
+        Vec3f n = (pts[2] - pts[0]) ^ (pts[1] - pts[0]);
         n.normalize();
         float intensity = n * light_dir;
-        for (int j = 0; j < 3; j++) pts[j] = this->world2screen(pts[j]);
+        for (int j = 0; j < 3; j++) pts[j] = m2v(ViewPort * Projection * v2m(pts[j]));
 
         if (intensity > 0) {
             Vec2i uv[3];
             for (int k = 0; k < 3; k++) uv[k] = model->uv(i, k);
-            this->triangle(pts, uv, showLabel, model, intensity);
+            this->triangle(pts[0], pts[1], pts[2], uv[0], uv[1], uv[2], showLabel, model, intensity);
         }
     }
     showLabel->UpdatePic();
