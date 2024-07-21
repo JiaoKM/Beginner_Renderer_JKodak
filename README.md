@@ -9,7 +9,15 @@ Use `Select Model` button to find and select your OBJ file.
 
 Use `Render` button to render the model on the screen.
 
-[Latest release version](release/240713release.zip)
+[Latest release version](release/240721release.zip)
+
+---
+
+### 21/07/2024 Update
+
+<img src="images/240721version.png" alt="240713version" style="zoom:50%;" />
+
+Today, I implement the rendering of a model with texture. The rendered model begins to feel realistic. [Release version](release/240721release.zip)
 
 ---
 
