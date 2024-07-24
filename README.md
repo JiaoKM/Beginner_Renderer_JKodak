@@ -53,3 +53,4 @@ Today, I complete the initialization of the renderer UI. The image will be set t
 
 - [Real-time display of images from CSDN](https://blog.csdn.net/wangduanqiugao/article/details/83040182)
 - [Tiny Renderer](https://github.com/ssloy/tinyrenderer/wiki/Lesson-0:-getting-started)
+- [Slider modification from CSDN](https://blog.csdn.net/qq_14945437/article/details/98730805)
