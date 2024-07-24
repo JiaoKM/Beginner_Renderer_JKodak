@@ -19,19 +19,19 @@ void renderer::reset_zBuffer()
     for (int i = width * height; i--; zBuffer[i] = -std::numeric_limits<float>::max());
 }
 
-Vec3f renderer::m2v(Matrix m)
+Matrix renderer::lookAt(Vec3f up)
 {
-    return Vec3f(m[0][0] / m[3][0], m[1][0] / m[3][0], m[2][0] / m[3][0]);
-}
-
-Matrix renderer::v2m(Vec3f v)
-{
-    Matrix m(4, 1);
-    m[0][0] = v.x;
-    m[1][0] = v.y;
-    m[2][0] = v.z;
-    m[3][0] = 1.f;
-    return m;
+    Vec3f z = this->camera->get_dir();
+    Vec3f x = (up ^ z).normalize();
+    Vec3f y = (z ^ x).normalize();
+    Matrix res = Matrix::identity(4);
+    for (int i = 0; i < 3; i++) {
+        res[0][i] = x[i];
+        res[1][i] = y[i];
+        res[2][i] = z[i];
+        res[i][3] = -this->camera->get_center()[i];
+    }
+    return res;
 }
 
 Matrix renderer::viewport(int x, int y, int w, int h)
@@ -60,7 +60,7 @@ Vec3f renderer::baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P)
         return Vec3f(-1, 1, 1);
 }
 
-void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float intensity)
+void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float *intensity)
 {
     if (t0.y==t1.y && t0.y==t2.y) return; // i dont care about degenerate triangles
     if (t0.y>t1.y) { std::swap(t0, t1); std::swap(uv0, uv1); }
@@ -87,7 +87,10 @@ void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2
                 if (this->zBuffer[idx]<P.z) {
                     this->zBuffer[idx] = P.z;
                     QColor color = model->diffuse(uvP);
-                    QRgb textureColor = qRgba(color.red() * intensity, color.green() * intensity, color.blue() * intensity, 255);
+                    if (intensity[0] <= 0) color.setRed(0);
+                    if (intensity[1] <= 0) color.setGreen(0);
+                    if (intensity[2] <= 0) color.setBlue(0);
+                    QRgb textureColor = qRgba(color.red() * intensity[0], color.green() * intensity[1], color.blue() * intensity[2], 255);
                     showLabel->SetPixel(P.x, P.y, textureColor);
                 }
             }
@@ -96,27 +99,27 @@ void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2
 
 bool renderer::render(ShowPicLabel *showLabel, Model *model)
 {
-    Vec3f light_dir(0, 0, -1);
+    Vec3f light_dir = Vec3f(1, -1, 1).normalize();
     Matrix Projection = Matrix::identity(4);
-    Projection[3][2] = -1.f / this->camera->get_pos().z;
+    Projection[3][2] = -1.f / (this->camera->get_pos() - this->camera->get_center()).norm();
     Matrix ViewPort = viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+    Matrix ModelView = lookAt(Vec3f(0, 1 ,0));
 
     for (int i = 0; i < model->nFaces(); i++) {
         std::vector<int> face = model->face(i);
-        Vec3f pts[3];
-        for (int j = 0; j < 3; j++) pts[j] = model->vert(face[j]);
-        Vec3f n = (pts[2] - pts[0]) ^ (pts[1] - pts[0]);
-        n.normalize();
-        float intensity = n * light_dir;
-        for (int j = 0; j < 3; j++) pts[j] = m2v(ViewPort * Projection * v2m(pts[j]));
-
-        if (intensity > 0) {
-            Vec2i uv[3];
-            for (int k = 0; k < 3; k++) uv[k] = model->uv(i, k);
-            this->triangle(pts[0], pts[1], pts[2], uv[0], uv[1], uv[2], showLabel, model, intensity);
+        Vec3i screen_coords[3];
+        Vec3f world_coords[3];
+        Vec2i uv[3];
+        float intensity[3];
+        for (int j = 0; j < 3; j++) {
+            Vec3f v = model->vert(face[j]);
+            screen_coords[j] = Vec3f(ViewPort * Projection * ModelView * Matrix(v));
+            world_coords[j] = v;
+            intensity[j] = model->norm(i, j) * light_dir;
+            uv[j] = model->uv(i, j);
         }
+        triangle(screen_coords[0], screen_coords[1], screen_coords[2], uv[0], uv[1], uv[2], showLabel, model, intensity);
     }
-    showLabel->UpdatePic();
 
     return true;
 }

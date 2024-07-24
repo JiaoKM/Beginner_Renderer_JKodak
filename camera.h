@@ -12,9 +12,11 @@ public:
     ~Camera();
     Vec3f get_pos();
     Vec3f get_dir();
+    Vec3f get_center();
     void set_pos(Vec3f pos);
 private:
     Vec3f position;
+    Vec3f center;
     Vec3f direction;
 };
 

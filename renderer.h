@@ -22,10 +22,9 @@ private:
     int height;
     float *zBuffer;
 
-    void triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float intensity);
+    void triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float *intensity);
     Vec3f baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P);
-    Vec3f m2v(Matrix m);
-    Matrix v2m(Vec3f v);
+    Matrix lookAt(Vec3f up);
     Matrix viewport(int x, int y, int w, int h);
 };
 
