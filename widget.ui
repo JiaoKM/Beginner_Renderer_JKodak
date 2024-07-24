@@ -80,7 +80,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalControl">
+  <widget class="pressSlider" name="horizontalControl">
    <property name="geometry">
     <rect>
      <x>1000</x>
@@ -147,7 +147,7 @@
     <string>Vertical</string>
    </property>
   </widget>
-  <widget class="QSlider" name="verticalControl">
+  <widget class="pressSlider" name="verticalControl">
    <property name="geometry">
     <rect>
      <x>1000</x>
@@ -160,7 +160,33 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
+  <widget class="QPushButton" name="ClearButton">
+   <property name="geometry">
+    <rect>
+     <x>1120</x>
+     <y>640</y>
+     <width>260</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>pressSlider</class>
+   <extends>QSlider</extends>
+   <header>pressslider.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

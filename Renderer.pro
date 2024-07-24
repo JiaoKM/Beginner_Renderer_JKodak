@@ -20,6 +20,7 @@ SOURCES += \
     geometry.cpp \
     main.cpp \
     model.cpp \
+    pressslider.cpp \
     renderer.cpp \
     showpiclabel.cpp \
     widget.cpp
@@ -28,6 +29,7 @@ HEADERS += \
     camera.h \
     geometry.h \
     model.h \
+    pressslider.h \
     renderer.h \
     showpiclabel.h \
     widget.h

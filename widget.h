@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QImage>
 #include <QLabel>
+#include <QDebug>
 #include <QString>
 #include <QPushButton>
 #include <QFileDialog>
@@ -29,6 +30,12 @@ private slots:
     void on_ModelSelect_clicked();
 
     void on_RenderButton_clicked();
+
+    void on_horizontalControl_valueChanged(int value);
+
+    void on_verticalControl_valueChanged(int value);
+
+    void on_ClearButton_clicked();
 
 private:
     Ui::Widget *ui;
