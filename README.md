@@ -5,17 +5,29 @@ I will create a simple renderer from zero as a beginner of graphics. All updates
 ------
 ### Instruction
 
-Use `Select Model` button to find and select your OBJ file.
+Use the `Select Model` button to find and select your OBJ file.
 
-Use `Render` button to render the model on the screen.
+Use the `Render` button to render the model on the screen.
 
-[Latest release version](release/240721release.zip)
+Use the `Clear` button to clear the shown picture and loaded model.
+
+Use the `Horizontal` and `Vertical` sliders to move the camera.
+
+[Latest release version](release/240724release.zip)
+
+---
+
+### 24/07/2024 Update
+
+<img src="images/240724version.png" alt="240724version" style="zoom:50%;" />
+
+Today, I implement the moving of the camera. We can use these two sliders by pressing to move the camera on a spherical face horizontally and vertically. Then we can look at the models from different angles. By the way, we can click the 'Clear' button to clear the picture and loaded model. [Release version](release/240724release.zip)
 
 ---
 
 ### 21/07/2024 Update
 
-<img src="images/240721version.png" alt="240713version" style="zoom:50%;" />
+<img src="images/240721version.png" alt="240721version" style="zoom:50%;" />
 
 Today, I implement the rendering of a model with texture. The rendered model begins to feel realistic. [Release version](release/240721release.zip)
 
