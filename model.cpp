@@ -93,6 +93,12 @@ Vec2i Model::uv(int iFace, int nVert)
     return Vec2i(this->uv_[idx].x * diffuseMap->width(), this->uv_[idx].y * diffuseMap->height());
 }
 
+Vec3f Model::norm(int iFace, int nVert)
+{
+    int idx = this->faces_[iFace][nVert][2];
+    return norms_[idx].normalize();
+}
+
 void Model::load_texture(QString objFilename, QString suffix)
 {
     QString title = objFilename.split(".")[0];

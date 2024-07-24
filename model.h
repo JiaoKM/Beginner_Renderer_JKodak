@@ -19,6 +19,7 @@ public:
     bool load_flag = true;
 
     Vec3f vert(int i);
+    Vec3f norm(int iFace, int nVert);
     Vec2i uv(int iFace, int nVert);
     QColor diffuse(Vec2i uv);
     std::vector<int> face(int i);
