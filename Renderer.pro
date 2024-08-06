@@ -22,6 +22,7 @@ SOURCES += \
     model.cpp \
     pressslider.cpp \
     renderer.cpp \
+    shader.cpp \
     showpiclabel.cpp \
     widget.cpp
 
@@ -31,6 +32,7 @@ HEADERS += \
     model.h \
     pressslider.h \
     renderer.h \
+    shader.h \
     showpiclabel.h \
     widget.h
 

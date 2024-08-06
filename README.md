@@ -1,6 +1,6 @@
 # Beginner Renderer J_Kodak
 
-I will create a simple renderer from zero as a beginner of graphics. All updates will be shown in this repository.
+I will create a simple renderer from zero as a beginner of graphics. The GUI is created using Qt Creator. All updates will be shown in this repository.
 
 ------
 ### Instruction

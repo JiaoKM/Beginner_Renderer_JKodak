@@ -179,6 +179,54 @@
     <string>Clear</string>
    </property>
   </widget>
+  <widget class="QLabel" name="LightPositionLabel">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>280</y>
+     <width>240</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>LightPosition XYZ</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="posXedit">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>275</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="posYedit">
+   <property name="geometry">
+    <rect>
+     <x>1190</x>
+     <y>275</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="posZedit">
+   <property name="geometry">
+    <rect>
+     <x>1300</x>
+     <y>275</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
