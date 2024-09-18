@@ -35,6 +35,11 @@ template <class t> struct Vec3 {
     template <class > friend std::ostream& operator<<(std::ostream& s, Vec3<t>& v);
 };
 
+template <class t> struct Vec4 {
+    t x, y, z, w;
+
+};
+
 typedef Vec2<float> Vec2f;
 typedef Vec2<int>   Vec2i;
 typedef Vec3<float> Vec3f;
