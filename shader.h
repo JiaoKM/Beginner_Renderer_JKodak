@@ -24,8 +24,8 @@ class PhongShader: public Shader
 public:
     using Shader::Shader;
     ~PhongShader();
-    Vec3f vertexShader(int iFace, int iVert);
-    QRgb fragmentShader(Vec3f pos);
+//    Vec3f vertexShader(int iFace, int iVert);
+//    QRgb fragmentShader(Vec3f pos);
 };
 
 #endif // SHADER_H
