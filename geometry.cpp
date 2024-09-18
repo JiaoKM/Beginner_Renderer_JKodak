@@ -54,6 +54,36 @@ Matrix Matrix::operator*(const Matrix& a) {
     return result;
 }
 
+Vec2f Matrix::operator*(const Vec2f &v) {
+    assert(cols == 2);
+    assert(rows == 2);
+    Vec2f tmp;
+    tmp.x = m[0][0] * v.x + m[0][1] * v.y;
+    tmp.y = m[1][0] * v.x + m[1][1] * v.y;
+    return tmp;
+}
+
+Vec3f Matrix::operator*(const Vec3f &v) {
+    assert(cols == 3);
+    assert(rows == 3);
+    Vec3f tmp;
+    tmp.x = m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z;
+    tmp.y = m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z;
+    tmp.z = m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z;
+    return tmp;
+}
+
+Vec4f Matrix::operator*(const Vec4f &v) {
+    assert(cols == 4);
+    assert(rows == 4);
+    Vec4f tmp;
+    tmp.x = m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w;
+    tmp.y = m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w;
+    tmp.z = m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w;
+    tmp.w = m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w;
+    return tmp;
+}
+
 Matrix Matrix::transpose() {
     Matrix result(cols, rows);
     for(int i=0; i<rows; i++)

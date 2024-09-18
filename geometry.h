@@ -93,6 +93,9 @@ public:
     static Matrix identity(int dimensions);
     std::vector<float>& operator[](const int i);
     Matrix operator*(const Matrix& a);
+    Vec2f operator*(const Vec2f& v);
+    Vec3f operator*(const Vec3f& v);
+    Vec4f operator*(const Vec4f& v);
     Matrix transpose();
     Matrix inverse();
     friend std::ostream& operator<<(std::ostream& s, Matrix& m);
