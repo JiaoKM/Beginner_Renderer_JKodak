@@ -13,7 +13,7 @@ public:
     Shader(Model *m);
     virtual ~Shader();
     QRgb sample2D(const QImage &img, Vec2f uvf);
-    virtual Vec3f vertexShader(int iFace, int iVert) = 0;
+    virtual Vec4f vertexShader(int iFace, int iVert) = 0;
     virtual QRgb fragmentShader(Vec3f pos) = 0;
 
     Model *shader_model;
@@ -24,7 +24,7 @@ class PhongShader: public Shader
 public:
     using Shader::Shader;
     ~PhongShader();
-//    Vec3f vertexShader(int iFace, int iVert);
+//    Vec4f vertexShader(int iFace, int iVert);
 //    QRgb fragmentShader(Vec3f pos);
 };
 

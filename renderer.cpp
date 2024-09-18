@@ -62,7 +62,7 @@ Vec3f renderer::baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P)
 
 void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, ShowPicLabel *showLabel, Model *model, float *intensity)
 {
-    if (t0.y==t1.y && t0.y==t2.y) return; // i dont care about degenerate triangles
+    if (t0.y==t1.y && t0.y==t2.y) return;
     if (t0.y>t1.y) { std::swap(t0, t1); std::swap(uv0, uv1); }
     if (t0.y>t2.y) { std::swap(t0, t2); std::swap(uv0, uv2); }
     if (t1.y>t2.y) { std::swap(t1, t2); std::swap(uv1, uv2); }
@@ -72,11 +72,11 @@ void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2
             bool second_half = i>t1.y-t0.y || t1.y==t0.y;
             int segment_height = second_half ? t2.y-t1.y : t1.y-t0.y;
             float alpha = (float)i/total_height;
-            float beta  = (float)(i-(second_half ? t1.y-t0.y : 0))/segment_height; // be careful: with above conditions no division by zero here
-            Vec3i A   =               t0  + Vec3f(t2-t0  )*alpha;
-            Vec3i B   = second_half ? t1  + Vec3f(t2-t1  )*beta : t0  + Vec3f(t1-t0  )*beta;
-            Vec2i uvA =               uv0 +      (uv2-uv0)*alpha;
-            Vec2i uvB = second_half ? uv1 +      (uv2-uv1)*beta : uv0 +      (uv1-uv0)*beta;
+            float beta  = (float)(i-(second_half ? t1.y-t0.y : 0))/segment_height;
+            Vec3i A   =               t0  + Vec3f(t2 - t0  ) * alpha;
+            Vec3i B   = second_half ? t1  + Vec3f(t2 - t1  ) * beta : t0  + Vec3f(t1 - t0) * beta;
+            Vec2i uvA =               uv0 +      (uv2 - uv0) * alpha;
+            Vec2i uvB = second_half ? uv1 +      (uv2 - uv1) * beta : uv0 +      (uv1 - uv0) * beta;
             if (A.x>B.x) { std::swap(A, B); std::swap(uvA, uvB); }
             for (int j=A.x; j<=B.x; j++) {
                 float phi = B.x==A.x ? 1. : (float)(j-A.x)/(float)(B.x-A.x);
