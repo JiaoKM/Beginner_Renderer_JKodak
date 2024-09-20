@@ -14,6 +14,13 @@ Widget::Widget(QWidget *parent)
     ui->RenderButton->setDisabled(true);
     ui->verticalControl->setDisabled(true);
     ui->horizontalControl->setDisabled(true);
+    ui->posXedit->setDisabled(true);
+    ui->posYedit->setDisabled(true);
+    ui->posZedit->setDisabled(true);
+    this->light_pos_x = 0.0;
+    this->light_pos_y = 0.0;
+    this->light_pos_z = 5.0;
+    this->light_pos = Vec3f(light_pos_x, light_pos_y, light_pos_z);
 }
 
 Widget::~Widget()
@@ -53,6 +60,9 @@ void Widget::on_RenderButton_clicked()
     ui->RenderButton->setDisabled(true);
     ui->verticalControl->setDisabled(false);
     ui->horizontalControl->setDisabled(false);
+    ui->posXedit->setDisabled(false);
+    ui->posYedit->setDisabled(false);
+    ui->posZedit->setDisabled(false);
 }
 
 void Widget::on_horizontalControl_valueChanged(int value)
@@ -86,6 +96,30 @@ void Widget::on_ClearButton_clicked()
     ui->RenderButton->setDisabled(true);
     ui->verticalControl->setDisabled(true);
     ui->horizontalControl->setDisabled(true);
+    ui->posXedit->setDisabled(true);
+    ui->posYedit->setDisabled(true);
+    ui->posZedit->setDisabled(true);
     ui->ConsoleText->setText(this->readyStatus);
     delete this->model;
+}
+
+void Widget::on_posXedit_textChanged()
+{
+    this->light_pos_x = ui->posXedit->toPlainText().toFloat();
+    this->light_pos.x = this->light_pos_x;
+    this->JRender->set_light_pos(this->light_pos);
+}
+
+void Widget::on_posYedit_textChanged()
+{
+    this->light_pos_y = ui->posYedit->toPlainText().toFloat();
+    this->light_pos.y = this->light_pos_y;
+    this->JRender->set_light_pos(this->light_pos);
+}
+
+void Widget::on_posZedit_textChanged()
+{
+    this->light_pos_z = ui->posZedit->toPlainText().toFloat();
+    this->light_pos.z = this->light_pos_z;
+    this->JRender->set_light_pos(this->light_pos);
 }

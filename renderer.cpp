@@ -123,3 +123,8 @@ bool renderer::render(ShowPicLabel *showLabel, Model *model)
 
     return true;
 }
+
+void renderer::set_light_pos(Vec3f pos)
+{
+    this->light_pos = pos;
+}
