@@ -28,8 +28,12 @@ private:
     std::vector<std::vector<Vec3i>> faces_;
     std::vector<Vec3f> norms_;
     std::vector<Vec2f> uv_;
+    QImage *normalMap;
     QImage *diffuseMap;
-    void load_texture(QString objFilename, QString suffix);
+    QImage *specularMap;
+    void load_normal_texture(QString objFilename, QString suffix);
+    void load_diffuse_texture(QString objFilename, QString suffix);
+    void load_specular_texture(QString objFilename, QString suffix);
 };
 
 #endif // MODEL_H

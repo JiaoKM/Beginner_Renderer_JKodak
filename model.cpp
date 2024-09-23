@@ -56,7 +56,9 @@ Model::Model(QString modelPath)
     }
 
     this->load_flag = true;
-    this->load_texture(modelPath, "_diffuse.jpg");
+    this->load_normal_texture(modelPath, "_normal.png");
+    this->load_diffuse_texture(modelPath, "_diffuse.jpg");
+    this->load_specular_texture(modelPath, "_specular.jpg");
 }
 
 Model::~Model()
@@ -99,14 +101,29 @@ Vec3f Model::norm(int iFace, int nVert)
     return norms_[idx].normalize();
 }
 
-void Model::load_texture(QString objFilename, QString suffix)
+void Model::load_normal_texture(QString objFilename, QString suffix)
+{
+    QString title = objFilename.split(".")[0];
+    QString textureFilename = title + suffix;
+    this->normalMap = new QImage(textureFilename);
+}
+
+void Model::load_diffuse_texture(QString objFilename, QString suffix)
 {
     QString title = objFilename.split(".")[0];
     QString textureFilename = title + suffix;
     this->diffuseMap = new QImage(textureFilename);
 }
 
+void Model::load_specular_texture(QString objFilename, QString suffix)
+{
+    QString title = objFilename.split(".")[0];
+    QString textureFilename = title + suffix;
+    this->specularMap = new QImage(textureFilename);
+}
+
 QColor Model::diffuse(Vec2i uv)
 {
     return QColor(this->diffuseMap->pixel(uv.x, uv.y));
 }
+

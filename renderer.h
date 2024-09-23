@@ -28,7 +28,7 @@ private:
     Vec3f baryCentric(Vec3f A, Vec3f B, Vec3f C, Vec3f P);
     Matrix lookAt(Vec3f up);
     Matrix viewport(int x, int y, int w, int h);
-    QColor phongShading(Model *model, Vec3f light_dir);
+    QColor phongShading(Model *model);
 };
 
 #endif // RENDERER_H

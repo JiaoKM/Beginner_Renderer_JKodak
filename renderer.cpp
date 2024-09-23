@@ -97,6 +97,8 @@ void renderer::triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2
         }
 }
 
+
+
 bool renderer::render(ShowPicLabel *showLabel, Model *model)
 {
     Vec3f light_dir = Vec3f(1, -1, 1).normalize();
